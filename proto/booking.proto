@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "github.com/vlad1xxx/online-booking/proto/bookingpb";
+
+service BookingService {
+  rpc CreateBooking (CreateBookingRequest) returns (CreateBookingResponse);
+  rpc GetAvailableDates (Empty) returns (DatesResponse);
+}
+
+message CreateBookingRequest {
+  string date = 1;
+  string time = 2;
+  string client_name = 3;
+  string number = 4;
+  int64 chat_id = 5;
+}
+
+message CreateBookingResponse {
+  string booking_id = 1;
+}
+
+message DatesResponse {
+  repeated string dates = 1;
+}
+
+message Empty {}
