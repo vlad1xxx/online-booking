@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"time"
 
+	"github.com/vlad1xxx/online-booking/services/bot/internal/client"
 	"github.com/vlad1xxx/online-booking/services/bot/internal/handler"
 	"github.com/vlad1xxx/online-booking/services/bot/internal/service"
 	tele "gopkg.in/telebot.v4"
@@ -12,7 +12,7 @@ import (
 
 func main() {
 	pref := tele.Settings{
-		Token:  "8074091096:AAGf1qF1a7zr4QL4VjV6QkW-8Jd3IvJOSvo",
+		Token:  "8074091096:AAE0ENx1A6CIKHLUbzomepRY1TF8Ua83PJk",
 		Poller: &tele.LongPoller{Timeout: 10 * time.Second},
 	}
 
@@ -22,8 +22,11 @@ func main() {
 		return
 	}
 	state := service.NewMemoryState()
-	bookingClient := service.
+	bookingClient := client.NewFakeBookingClient()
 
-	service := service.New(state)
-	h := handler.NewHandler(b)
+	svc := service.New(bookingClient, state)
+	h := handler.NewHandler(b, svc)
+	h.RegisterHandlers()
+
+	b.Start()
 }

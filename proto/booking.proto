@@ -7,6 +7,8 @@ option go_package = "github.com/vlad1xxx/online-booking/proto/bookingpb";
 service BookingService {
   rpc CreateBooking (CreateBookingRequest) returns (CreateBookingResponse);
   rpc GetAvailableDates (Empty) returns (DatesResponse);
+  rpc GetAvailableTimes (Empty) returns (TimesResponse);
+  rpc CreateReservation
 }
 
 message CreateBookingRequest {
@@ -23,6 +25,10 @@ message CreateBookingResponse {
 
 message DatesResponse {
   repeated string dates = 1;
+}
+
+message TimesResponse {
+  repeated string times = 1;
 }
 
 message Empty {}
